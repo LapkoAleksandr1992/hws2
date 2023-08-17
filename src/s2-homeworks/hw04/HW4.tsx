@@ -1,5 +1,5 @@
 import React from 'react'
-import s2 from 'src/s2-homeworks/App.module.css'
+import s2 from "../App.module.css"
 import Stand from './Stand'
 
 /*

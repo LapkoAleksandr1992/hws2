@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import SuperSelect from './common/c5-SuperSelect/SuperSelect'
 import SuperRadio from './common/c6-SuperRadio/SuperRadio'
-import s2 from 'src/s2-homeworks/App.module.css'
+import s2 from '../App.module.css'
 import s from './HW7.module.css'
 
 /*
@@ -12,9 +12,9 @@ import s from './HW7.module.css'
 * */
 
 const arr = [
-    { id: 1, value: 'x' },
-    { id: 2, value: 'y' },
-    { id: 3, value: 'z' },
+    { id: 1, value: 'Junior-' },
+    { id: 2, value: 'Junior' },
+    { id: 3, value: 'Junior+' },
 ] // value может быть изменено
 
 const HW7 = () => {
