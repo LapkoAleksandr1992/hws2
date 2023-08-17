@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import s2 from 'src/s2-homeworks/App.module.css'
+import s2 from '../App.module.css'
 import s from './HW14.module.css'
 import axios from 'axios'
 import SuperDebouncedInput from './common/c8-SuperDebouncedInput/SuperDebouncedInput'
@@ -10,7 +10,7 @@ import {useSearchParams} from 'react-router-dom'
 * 2 - дописать функцию sendQuery в HW14
 * 3 - дописать функцию onChangeText в HW14
 * 4 - сделать стили в соответствии с дизайном
-* 5 - добавить HW14 в HW5/pages/JuniorPlus
+* 5 - добавить HW14 в HW5/pages/Junio`rPlus
 * */
 
 const getTechs = (find: string) => {
@@ -25,19 +25,25 @@ const getTechs = (find: string) => {
 }
 
 const HW14 = () => {
-    const [find, setFind] = useState('')
     const [isLoading, setLoading] = useState(false)
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [find, setFind] = useState('')
     const [techs, setTechs] = useState<string[]>([])
 
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    console.log(searchParams)
+
     const sendQuery = (value: string) => {
+
+
         setLoading(true)
         getTechs(value)
-            .then((res) => {
+            .then((res:any) => {
+                setLoading(false)
                 // делает студент
 
+                setTechs(res.data.techs)
                 // сохранить пришедшие данные
-
                 //
             })
     }
@@ -48,7 +54,7 @@ const HW14 = () => {
 
         // добавить/заменить значение в квери урла
         // setSearchParams(
-
+        setSearchParams(value)
         //
     }
 
