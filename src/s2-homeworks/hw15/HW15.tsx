@@ -1,10 +1,14 @@
 import React, {useEffect, useState} from 'react'
-import s2 from 'src/s2-homeworks/App.module.css'
+import s2 from '../App.module.css'
 import s from './HW15.module.css'
-import axios from 'axios'
+import axios, {} from 'axios'
 import SuperPagination from './common/c9-SuperPagination/SuperPagination'
 import {useSearchParams} from 'react-router-dom'
 import SuperSort from './common/c10-SuperSort/SuperSort'
+
+import CircularProgress from '@mui/material/CircularProgress';
+import Box from '@mui/material/Box';
+
 
 /*
 * 1 - дописать SuperPagination
@@ -47,45 +51,44 @@ const HW15 = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const [techs, setTechs] = useState<TechType[]>([])
 
-    const sendQuery = (params: any) => {
+
+    const sendQuery = (params: ParamsType) => {
         setLoading(true)
         getTechs(params)
             .then((res) => {
                 // делает студент
-
-                // сохранить пришедшие данные
-
+                if (res) {
+                    setTechs(res.data.techs)
+                    setTotalCount(res.data.totalCount)
+                    // сохранить пришедшие данные
+                    setLoading(false)
+                }
+                setLoading(false)
                 //
             })
     }
 
     const onChangePagination = (newPage: number, newCount: number) => {
-        // делает студент
-
-        // setPage(
-        // setCount(
-
-        // sendQuery(
-        // setSearchParams(
-
-        //
+        setCount(newCount)
+        setPage(newPage)
+        const params ={sort,page:newPage,count:newCount }
+        sendQuery(params)
+        setSearchParams({sort:sort, page:newPage.toString(),count:newCount.toString()
+        })
     }
 
     const onChangeSort = (newSort: string) => {
-        // делает студент
-
-        // setSort(
-        // setPage(1) // при сортировке сбрасывать на 1 страницу
-
-        // sendQuery(
-        // setSearchParams(
-
-        //
+        setSort(newSort)
+        setPage(1)
+        const params ={sort: newSort, page, count}
+        sendQuery(params)
+        setSearchParams({sort:newSort,page:page.toString(),count:count.toString()
+            })
     }
 
     useEffect(() => {
         const params = Object.fromEntries(searchParams)
-        sendQuery({page: params.page, count: params.count})
+        sendQuery({sort: '', page: +params.page, count: +params.count})
         setPage(+params.page || 1)
         setCount(+params.count || 4)
     }, [])
@@ -105,10 +108,8 @@ const HW15 = () => {
     return (
         <div id={'hw15'}>
             <div className={s2.hwTitle}>Homework #15</div>
-
             <div className={s2.hw}>
-                {idLoading && <div id={'hw15-loading'} className={s.loading}>Loading...</div>}
-
+                {idLoading && <div id={'hw15-loading'} className={s.loading}><CircularIndeterminate/></div>}
                 <SuperPagination
                     page={page}
                     itemsCountForPage={count}
@@ -119,12 +120,18 @@ const HW15 = () => {
                 <div className={s.rowHeader}>
                     <div className={s.techHeader}>
                         tech
-                        <SuperSort sort={sort} value={'tech'} onChange={onChangeSort}/>
+                        <SuperSort
+                            sort={sort}
+                            value={'tech'}
+                            onChange={onChangeSort}/>
                     </div>
 
                     <div className={s.developerHeader}>
                         developer
-                        <SuperSort sort={sort} value={'developer'} onChange={onChangeSort}/>
+                        <SuperSort
+                            sort={sort}
+                            value={'developer'}
+                            onChange={onChangeSort}/>
                     </div>
                 </div>
 
@@ -132,6 +139,14 @@ const HW15 = () => {
             </div>
         </div>
     )
+}
+
+function CircularIndeterminate() {
+    return (
+        <Box sx={{display: 'flex'}}>
+            <CircularProgress/>
+        </Box>
+    );
 }
 
 export default HW15

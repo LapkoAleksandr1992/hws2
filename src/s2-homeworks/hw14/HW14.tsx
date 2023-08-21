@@ -31,7 +31,7 @@ const HW14 = () => {
 
 
     const [searchParams, setSearchParams] = useSearchParams()
-    console.log(searchParams)
+
 
     const sendQuery = (value: string) => {
 
